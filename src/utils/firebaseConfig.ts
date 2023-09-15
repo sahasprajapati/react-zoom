@@ -3,12 +3,12 @@ import { initializeApp } from "firebase/app";
 import { collection, getFirestore } from "firebase/firestore";
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: "react-auth-6788d.firebaseapp.com",
-  projectId: "react-auth-6788d",
-  storageBucket: "react-auth-6788d.appspot.com",
-  messagingSenderId: "131797845021",
-  appId: "1:131797845021:web:3f7ff4766e2b89ca5d32f4",
-  measurementId: "G-VWPBR1NSLL",
+  authDomain: "react-zoom-62a0f.firebaseapp.com",
+  projectId: "react-zoom-62a0f",
+  storageBucket: "react-zoom-62a0f.appspot.com",
+  messagingSenderId: "134977736213",
+  appId: "1:134977736213:web:a9d356f3e0b67da4b8c81c",
+  measurementId: "G-2S753XD64W",
 };
 
 const app = initializeApp(firebaseConfig);
