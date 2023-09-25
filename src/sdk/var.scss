@@ -1,0 +1,29 @@
+@function vw($px) {
+  @return ($px * 100vmin) / 750px;
+}
+
+@mixin defineColorHSL($color, $hue, $saturation, $lightness) {
+  #{$color}: unquote("hsl(#{$hue}, #{$saturation}, #{$lightness})");
+}
+
+@mixin defineColorHSLA($color, $hue, $saturation, $lightness, $alpha) {
+  #{$color}: unquote("hsla(#{$hue}, #{$saturation}, #{$lightness}, #{$alpha})");
+}
+
+:root {
+  @include defineColorHSL("--ptf-primary-background", 0, 0%, 100%);
+  @include defineColorHSLA(
+    "--ptf-primary-background-hover",
+    220,
+    60%,
+    85%,
+    50%
+  );
+  @include defineColorHSL("--ptf-accent", 140, 32.2%, 44.9%);
+  @include defineColorHSLA("--ptf-accent-background", 158, 100%, 64%, 20%);
+
+  @include defineColorHSL("--ptf-primary-background-right", 222, 56%, 96%);
+  @include defineColorHSLA("--ptf-primary-background-glass", 220, 8%, 39%, 50%);
+
+  @include defineColorHSLA("--ptf-primary-button-color", 220, 8%, 39%, 50%);
+}

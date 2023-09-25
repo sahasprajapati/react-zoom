@@ -1,4 +1,6 @@
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
+// import { ZegoUIKitPrebuilt } from "../sdk/index";
+
 import { onAuthStateChanged } from "firebase/auth";
 import { getDocs, query, where } from "firebase/firestore";
 import moment from "moment";
@@ -7,7 +9,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import useToast from "../hooks/useToast";
 import { firebaseAuth, meetingsRef } from "../utils/firebaseConfig";
 import { generateMeetingID } from "../utils/generateMeetingId";
-
 export default function JoinMeeting() {
   const params = useParams();
   const navigate = useNavigate();
@@ -84,6 +85,7 @@ export default function JoinMeeting() {
     };
     getMeetingData();
   }, [params.id, user, userLoaded, createToast, navigate]);
+
   const myMeeting = async (element: any) => {
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       parseInt(process.env.REACT_APP_ZEGOCLOUD_APP_ID!),
@@ -92,6 +94,7 @@ export default function JoinMeeting() {
       user?.uid ? user.uid : generateMeetingID(),
       user?.displayName ? user.displayName : generateMeetingID()
     );
+
     const zp = ZegoUIKitPrebuilt.create(kitToken);
 
     zp?.joinRoom({
@@ -118,7 +121,7 @@ export default function JoinMeeting() {
       }}
     >
       <div
-        className="myCallContainer"
+        className="myCallContainer preView_services"
         ref={myMeeting}
         style={{ width: "100%", height: "100vh" }}
       ></div>
