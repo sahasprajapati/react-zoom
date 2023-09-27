@@ -94,3 +94,36 @@ export function generateTokenForCallInvitation(
       };
     });
 }
+
+export function generateToken(
+  userID: string,
+  roomID: string,
+  userName: string
+): Promise<{ token: string }> {
+  console.log("generateToken:", process.env);
+  if (process.env.REACT_APP_ENV === "test") {
+    return fetch(
+      `https://nextjs-token-7berndqqr-choui666.vercel.app/api/access_token?userID=${userID}&userName=${userName}&roomID=${roomID}&expired_ts=86400`,
+      {
+        method: "GET",
+      }
+    ).then((res) => res.json());
+  } else {
+    return fetch("https://console-api.zegocloud.com/demo/prebuilt_token", {
+      method: "POST",
+      body: JSON.stringify({
+        user_id: userID,
+        room_id: roomID,
+        user_name: encodeURIComponent(userName),
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(async (res) => {
+      const result = await res.json();
+      return {
+        token: result.data.token,
+      };
+    });
+  }
+}

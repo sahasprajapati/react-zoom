@@ -46,6 +46,9 @@ import { ZegoWhiteboardSharingLayout } from "./components/ZegoWhiteboardSharingL
 import ShowManageContext from "../context/showManage";
 import ZegoAudio from "../../components/zegoMedia/audio";
 import { ZegoMixPlayer } from "./components/zegoMixPlayer";
+import { meetingsRef } from "../../../../utils/firebaseConfig";
+import { getDocs, query, where } from "firebase/firestore";
+import { MeetingType } from "../../../../utils/types";
 export class ZegoRoom extends React.PureComponent<ZegoBrowserCheckProp> {
   state: {
     localStream: undefined | MediaStream;
@@ -83,6 +86,7 @@ export class ZegoRoom extends React.PureComponent<ZegoBrowserCheckProp> {
     isRequestingCohost: boolean; // 是否正在申请连麦
     unreadInviteList: Set<string>; // 是否有未读的连麦申请
     isMixing: "1" | "0"; // 是否
+    meetingInfo?: MeetingType;
   } = {
     localStream: undefined,
     layOutStatus: this.initLayout(),
@@ -168,6 +172,7 @@ export class ZegoRoom extends React.PureComponent<ZegoBrowserCheckProp> {
   componentDidMount() {
     this.setAllSinkId(this.state.selectSpeaker || "");
     this.computeByResize();
+    this.getMyMeetings();
     setTimeout(() => {
       this.msgDelayed = false;
     }, 5000);
@@ -1948,7 +1953,25 @@ export class ZegoRoom extends React.PureComponent<ZegoBrowserCheckProp> {
         return "ONE_VIDEO";
     }
   }
+  async getMyMeetings() {
+    const firestoreQuery = query(
+      meetingsRef,
+      where("meetingId", "==", window.location.pathname?.split("/")[2])
+    );
+    const fetchedMeetings = await getDocs(firestoreQuery);
+    if (fetchedMeetings.docs.length) {
+      const myMeetings: Array<MeetingType> = [];
+      fetchedMeetings.forEach((meeting) => {
+        myMeetings.push({
+          docId: meeting.id,
+          ...(meeting.data() as MeetingType),
+        });
+      });
+      this.state.meetingInfo = myMeetings?.[0];
+    }
+  }
   render(): React.ReactNode {
+    console.log("loc");
     const startIndex =
       this.state.notificationList.length < 4
         ? 0
@@ -2042,7 +2065,41 @@ export class ZegoRoom extends React.PureComponent<ZegoBrowserCheckProp> {
             style={{ paddingTop: this.showHeader ? 0 : "16px" }}
           >
             <div className={ZegoRoomCss.contentLeft}>
-              {this.getLayoutScreen()}
+              <div style={{ width: "100%" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    padding: "1em",
+                    gap: "1em",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className={`${ZegoRoomCss.backButtonModel} `}>
+                    <div
+                      className={`${ZegoRoomCss.backButton}`}
+                      onClick={() => {
+                        window.history.back();
+                      }}
+                    ></div>
+                  </div>
+
+                  <p className={ZegoRoomCss.overviewTitle}>
+                    {this.state.meetingInfo?.meetingName}
+                  </p>
+                </div>
+                <hr
+                  style={{
+                    display: "block",
+                    height: "1px",
+                    border: 0,
+                    borderTop: "2px solid #edf0f6",
+                    margin: " 1em 0",
+                    padding: 0,
+                  }}
+                />
+
+                {this.getLayoutScreen()}
+              </div>
               {this.getHiddenUser()}
               <div className={ZegoRoomCss.notify} id="zego_left_notify_wrapper">
                 {this.state.notificationList
@@ -2244,51 +2301,56 @@ export class ZegoRoom extends React.PureComponent<ZegoBrowserCheckProp> {
                 {this.state.layOutStatus === "INVITE" && "Details"}
                 {this.state.layOutStatus === "USER_LIST" && "Group members"}
                 {this.state.layOutStatus === "MESSAGE" && "Group Chat"}
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "flex-end",
-                    alignItems: "center",
-                  }}
-                >
-                  {this.props.core._config.showUserList && (
-                    <div
-                      className={`${ZegoRoomCss.memberButton} ${
-                        this.state.unreadInviteList.size > 0
-                          ? ZegoRoomCss.msgButtonRed
-                          : ""
-                      } ${ZegoRoomCss.contentLeftButton} ${
-                        this.state.layOutStatus === "USER_LIST"
-                          ? ZegoRoomCss.contentLeftButtonSelected
-                          : ""
-                      }`}
-                      onClick={() => {
-                        this.toggleLayOutOn("USER_LIST");
-                      }}
-                    >
-                      Participants
-                    </div>
-                  )}
-                  {this.props.core._config.showTextChat && (
-                    <div
-                      className={`${ZegoRoomCss.msgButton} ${
-                        this.state.haveUnReadMsg ? ZegoRoomCss.msgButtonRed : ""
-                      } ${ZegoRoomCss.contentLeftButton} ${
-                        this.state.layOutStatus === "MESSAGE"
-                          ? ZegoRoomCss.contentLeftButtonSelected
-                          : ""
-                      }`}
-                      onClick={() => {
-                        this.setState({
-                          haveUnReadMsg: false,
-                        });
-                        this.toggleLayOutOn("MESSAGE");
-                      }}
-                    >
-                      Messages
-                    </div>
-                  )}
-                </div>
+                {(this.state.layOutStatus === "USER_LIST" ||
+                  this.state.layOutStatus === "MESSAGE") && (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "flex-end",
+                    }}
+                  >
+                    {this.props.core._config.showUserList && (
+                      <div
+                        className={`${ZegoRoomCss.memberButton} ${
+                          this.state.unreadInviteList.size > 0
+                            ? ZegoRoomCss.msgButtonRed
+                            : ""
+                        } ${ZegoRoomCss.contentLeftButton} ${
+                          this.state.layOutStatus === "USER_LIST"
+                            ? ZegoRoomCss.contentLeftButtonSelected
+                            : ""
+                        }`}
+                        onClick={() => {
+                          this.toggleLayOutOn("USER_LIST");
+                        }}
+                      >
+                        Participants
+                      </div>
+                    )}
+                    {this.props.core._config.showTextChat && (
+                      <div
+                        className={`${ZegoRoomCss.msgButton} ${
+                          this.state.haveUnReadMsg
+                            ? ZegoRoomCss.msgButtonRed
+                            : ""
+                        } ${ZegoRoomCss.contentLeftButton} ${
+                          this.state.layOutStatus === "MESSAGE"
+                            ? ZegoRoomCss.contentLeftButtonSelected
+                            : ""
+                        }`}
+                        onClick={() => {
+                          this.setState({
+                            haveUnReadMsg: false,
+                          });
+                          this.toggleLayOutOn("MESSAGE");
+                        }}
+                      >
+                        Messages
+                      </div>
+                    )}
+                  </div>
+                )}
                 <span
                   className={ZegoRoomCss.listHeaderClose}
                   onClick={() => {

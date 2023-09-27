@@ -19,11 +19,21 @@
     85%,
     50%
   );
-  @include defineColorHSL("--ptf-accent", 140, 32.2%, 44.9%);
-  @include defineColorHSLA("--ptf-accent-background", 158, 100%, 64%, 20%);
+  @include defineColorHSL("--ptf-accent", 172, 99%, 33%);
+  @include defineColorHSL("--ptf-accent-background", 180, 29%, 86%);
 
-  @include defineColorHSL("--ptf-primary-background-right", 222, 56%, 96%);
-  @include defineColorHSLA("--ptf-primary-background-glass", 220, 8%, 39%, 50%);
+  @include defineColorHSL("--ptf-primary-background-right", 220, 33%, 95%);
+  @include defineColorHSL("--ptf-primary-background-content", 217, 7%, 66%);
+
+  @include defineColorHSLA("--ptf-primary-background-glass", 220, 6%, 39%, 40%);
 
   @include defineColorHSLA("--ptf-primary-button-color", 220, 8%, 39%, 50%);
 }
+
+// --labelColor: #666666;
+// --inputColor: #2a2a2a;
+// --inputSelectedColor: #0055ff;
+// --placeholderColor: #bbbbbb;
+// --hoverBgColor: #f5f7fa;
+// --selectedColor: #0055ff;
+// --bgColor: #fff;

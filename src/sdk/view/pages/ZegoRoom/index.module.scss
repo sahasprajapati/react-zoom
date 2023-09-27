@@ -239,20 +239,27 @@
   width: 100%;
   height: 150px;
   padding: 0 30px;
-  z-index: 9;
+  z-index: 999;
   // background: var(--ptf-primary-background);
 }
 @mixin toolButton {
   width: 42px;
   height: 42px;
-  background-color: var(--ptf-primary-background-glass);
+  // background-color: var(--ptf-primary-background-glass);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 28px 28px;
   border-radius: 10px;
+  backdrop-filter: blur(6px) saturate(141%);
+  -webkit-backdrop-filter: blur(6px) saturate(141%);
+  background-color: rgba(238, 241, 246, 0.15);
+  border-radius: 50%;
+  border: 1px solid rgba(209, 213, 219, 0.1);
+  box-shadow: 0px 3px 6px 2px rgba(23, 24, 33, 0.15);
+
   cursor: pointer;
   &:hover {
-    background-color: #404352;
+    background-color: rgba(255, 255, 255, 0.35);
   }
 }
 
@@ -267,12 +274,15 @@
     margin: 0 10px;
   }
   .leaveButton {
-    width: 82px;
+    height: 62px;
+    width: 62px;
     background-color: #e8543b;
     background-image: url("../../../sdkAssets/icon_inner_leave.png");
+
     &:hover {
       background-color: #ff5d42;
     }
+    border-radius: 40%;
   }
   .liveLeaveButton {
     width: 42px;
@@ -325,6 +335,14 @@
   &.close {
     background-image: url("../../../sdkAssets/icon_inner_camera_close.png");
   }
+}
+.backButton {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  background-size: contain;
+  background-position: center;
+  background-image: url("../../../sdkAssets/icon_left.png");
 }
 .screenButton {
   background-image: url("../../../sdkAssets/icon_inner_screen.png");
@@ -395,14 +413,21 @@
   box-sizing: border-box;
   width: 155px;
   padding: 12px 6px 16px;
-  background: #2c2f3e;
-  border: 1px solid #3d4054;
-  border-radius: 6px;
-  box-shadow: 0px 3px 6px 0px rgba(23, 24, 33, 0.75);
+  // background: #2c2f3e;
+  // border: 1px solid #3d4054;
+  // border-radius: 6px;
+
+  backdrop-filter: blur(6px) saturate(141%);
+  -webkit-backdrop-filter: blur(6px) saturate(141%);
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid #dde0e3;
+
+  box-shadow: 0px 3px 6px 2px rgba(23, 24, 33, 0.15);
   transform: translateX(-50%);
   & > div {
     padding: 7px 14px;
-    color: rgba(255, 255, 255, 0.9);
+    color: #2a2a2a;
     font-weight: 400;
     font-size: 16px;
     line-height: 22px;
@@ -410,7 +435,7 @@
     border-radius: 4px;
     cursor: pointer;
     &:hover {
-      background: #36394b;
+      background: #f5f7fa;
     }
   }
   & > span {
@@ -418,19 +443,7 @@
     width: 141px;
     height: 1px;
     margin: 8px 0;
-    background: #3d4054;
-  }
-  &::after {
-    position: absolute;
-    bottom: -7px;
-    left: calc(50% - 5px);
-    width: 10px;
-    height: 10px;
-    background: #2c2f3e;
-    border-bottom: 1px solid #3d4054;
-    border-left: 1px solid #3d4054;
-    transform: rotateZ(-45deg);
-    content: "";
+    background: #333;
   }
 }
 .notify {
@@ -644,10 +657,35 @@
   background: none;
   color: var(--ptf-accent) !important;
   border-radius: 1em;
-  padding: 0.35em;
+  padding: 0.45em;
+  padding-left: 1em;
+  padding-right: 1em;
   font-size: 12px;
 }
 
 .contentLeftButtonSelected {
   background-color: var(--ptf-accent-background);
+}
+
+.backButtonModel {
+  z-index: 10;
+  box-sizing: border-box;
+  padding: 0.2em;
+  // background: #2c2f3e;
+  // border: 1px solid #3d4054;
+  // border-radius: 6px;
+
+  backdrop-filter: blur(6px) saturate(141%);
+  -webkit-backdrop-filter: blur(6px) saturate(141%);
+  background-color: var(--ptf-primary-background);
+  border-radius: 12px;
+  border: 1px solid #dde0e3;
+  &:hover {
+    cursor: pointer;
+    background-color: #f5f7fa;
+  }
+}
+.overviewTitle {
+  font-size: 20px;
+  font-weight: bold;
 }

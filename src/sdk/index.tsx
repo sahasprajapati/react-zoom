@@ -1,3 +1,4 @@
+import ReactDOM, { Root } from "react-dom/client";
 import { ZegoSuperBoardManager } from "zego-superboard-web";
 import ZIM from "zego-zim-web";
 import {
@@ -17,7 +18,8 @@ import {
 import { ZegoCloudRTCCore } from "./modules/index";
 import { generatePrebuiltToken, isPc } from "./util";
 import { ZegoCloudRTCKitComponent } from "./view/index";
-import { Root, createRoot } from "react-dom/client";
+import { query, where } from "firebase/firestore";
+import { meetingsRef } from "../utils/firebaseConfig";
 
 export class ZegoUIKitPrebuilt {
   static core: ZegoCloudRTCCore | undefined;
@@ -175,7 +177,7 @@ export class ZegoUIKitPrebuilt {
 
     const result = ZegoUIKitPrebuilt.core.setConfig(roomConfig);
     if (result) {
-      this.root = createRoot(roomConfig.container as HTMLDivElement);
+      this.root = ReactDOM.createRoot(roomConfig.container as HTMLDivElement);
       this.root.render(
         <ZegoCloudRTCKitComponent
           core={ZegoUIKitPrebuilt.core}

@@ -1,4 +1,6 @@
 .whiteTheme {
+}
+.blackTheme {
   --labelColor: #666666;
   --inputColor: #2a2a2a;
   --inputSelectedColor: #0055ff;
@@ -6,15 +8,6 @@
   --hoverBgColor: #f5f7fa;
   --selectedColor: #0055ff;
   --bgColor: #fff;
-}
-.blackTheme {
-  --labelColor: #a6a7ad;
-  --inputColor: #fff;
-  --inputSelectedColor: #a4a4a4;
-  --placeholderColor: #bbbbbb;
-  --hoverBgColor: #36394b;
-  --selectedColor: #fff;
-  --bgColor: #2c2f3e;
   .optionsWrapper {
     border-color: #3d4054;
   }

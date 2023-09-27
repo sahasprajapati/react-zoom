@@ -26,6 +26,7 @@ import { ZegoSuperBoardManager } from "zego-superboard-web";
 import { ZIM } from "zego-zim-web";
 import { getUrlParams, isAndroid, isIOS, isPc } from "../sdk/util";
 import {
+  generateToken,
   generateTokenForCallInvitation,
   getRandomName,
   randomID,
@@ -658,54 +659,6 @@ export default class JoinMeetingCustom extends React.PureComponent {
           this.state.callInvitation ? APP.callInvitation : ""
         }`}
       >
-        {this.state.showPreviewHeader === "show" && (
-          <div
-            className={`${APP.nav} ${isPc() ? "" : APP.mobileNav} preView_nav`}
-          >
-            <div
-              className={`${APP.LOGO} ${isPc() ? "" : APP.mobileLOGO}`}
-              onClick={() => {
-                window.open("https://www.zegocloud.com", "_blank");
-              }}
-            ></div>
-            <div className={`${APP.link} ${isPc() ? "" : APP.mobileLink}`}>
-              {this.state.showSettingsBtn && (
-                <div
-                  className={APP.link_item}
-                  onClick={() => {
-                    this.setState({
-                      showSettings: true,
-                      liveStreamingMode:
-                        getUrlParams().get("liveStreamingMode") ||
-                        "RealTimeLive",
-                    });
-                  }}
-                >
-                  <span className={APP.icon_settings}></span>{" "}
-                  {isPc() && "Settings"}
-                </div>
-              )}
-              <a
-                href={this.state.docs}
-                target="_blank"
-                className={APP.link_item}
-                rel="noreferrer"
-              >
-                <span className={APP.icon__doc}></span>{" "}
-                {isPc() && "Documentation"}
-              </a>
-              <a
-                href="https://github.com/ZEGOCLOUD/zego_uikit_prebuilt_web/"
-                target="_blank"
-                className={APP.link_item}
-                rel="noreferrer"
-              >
-                <span className={APP.icon__github}></span>
-                {isPc() && "View demo code"}
-              </a>
-            </div>
-          </div>
-        )}
         {!this.state.callInvitation && (
           <div
             ref={this.myMeeting}
