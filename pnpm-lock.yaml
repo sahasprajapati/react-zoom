@@ -48,8 +48,8 @@ dependencies:
     specifier: ^1.2.1
     version: 1.2.1
   crypto-js:
-    specifier: ^4.1.1
-    version: 4.1.1
+    specifier: ^4.2.0
+    version: 4.2.0
   css-loader:
     specifier: ^6.7.1
     version: 6.7.1(webpack@5.88.2)
@@ -16514,8 +16514,8 @@ packages:
       randomfill: 1.0.4
     dev: true
 
-  /crypto-js@4.1.1:
-    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
     dev: false
 
   /crypto-random-string@1.0.0:
@@ -38054,7 +38054,7 @@ packages:
   /zego-zim-web@2.9.0:
     resolution: {integrity: sha512-ugRUq/7qJjWl6u2aJmQkVoyDJ9f29dq4JtejPdjh4NoTEXX/l0PLgZ4hI5lO0rdyDzHeNoIjiwuN02IAZliiNg==}
     dependencies:
-      crypto-js: 4.1.1
+      crypto-js: 4.2.0
       js-base64: 3.7.5
       jszip: 3.10.1
       long: 4.0.0
